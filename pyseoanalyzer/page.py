@@ -81,12 +81,12 @@ class Page:
         self.analyze_extra_tags = analyze_extra_tags
         self.encoding = encoding
         self.run_llm_analysis = run_llm_analysis
-        self.title: str
-        self.author: str
-        self.description: str
-        self.hostname: str
-        self.sitename: str
-        self.date: str
+        self.title: str = ""
+        self.author: str = ""
+        self.description: str = ""
+        self.hostname: str = ""
+        self.sitename: str = ""
+        self.date: str = ""
         self.keywords = {}
         self.warnings = []
         self.translation = bytes.maketrans(
@@ -117,12 +117,12 @@ class Page:
 
         context = {
             "url": self.url,
-            "title": self.title,
-            "description": self.description,
-            "author": self.author,
-            "hostname": self.hostname,
-            "sitename": self.sitename,
-            "date": self.date,
+            "title": self.title or "No title",
+            "description": self.description or "No description",
+            "author": self.author or "No author",
+            "hostname": self.hostname or "No hostname",
+            "sitename": self.sitename or "No sitename",
+            "date": self.date or "No date",
             "word_count": self.total_word_count,
             "keywords": self.sort_freq_dist(self.keywords, limit=5),
             "bigrams": self.bigrams,
