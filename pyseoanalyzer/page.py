@@ -251,6 +251,8 @@ class Page:
 
         self.content = json.loads(content) if content else None
 
+        self.content = self.get_all_text_from_html(raw_html)
+
         # remove comments, they screw with BeautifulSoup
         html_without_comments = re.sub(r"<!--.*?-->", r"", raw_html, flags=re.DOTALL)
 
@@ -498,3 +500,12 @@ class Page:
 
     def warn(self, warning):
         self.warnings.append(warning)
+
+    def get_all_text_from_html(html_content):
+        # Analizza l'HTML grezzo con BeautifulSoup
+        soup = BeautifulSoup(html_content, 'html.parser')
+        
+        # Estrai tutto il testo (rimuove script, stili, ecc.)
+        text = soup.get_text(separator=' ', strip=True)
+        
+        return {"text":text}
