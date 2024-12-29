@@ -501,7 +501,7 @@ class Page:
     def warn(self, warning):
         self.warnings.append(warning)
 
-    def get_all_text_from_html(html_content):
+    def get_all_text_from_html(self, html_content):
         # Analizza l'HTML grezzo con BeautifulSoup
         soup = BeautifulSoup(html_content, 'html.parser')
         
