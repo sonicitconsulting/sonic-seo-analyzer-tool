@@ -14,6 +14,8 @@ from urllib.parse import urlsplit
 from urllib3.exceptions import HTTPError
 from py3langid.langid import LanguageIdentifier, MODEL_FILE 
 from spacy.cli import download
+from sklearn.feature_extraction.text import TfidfVectorizer
+
 
 from .http import http
 from .stopwords import ENGLISH_STOP_WORDS
@@ -295,6 +297,8 @@ class Page:
 
         self.total_word_count = len(raw_tokens)
 
+        keywords = self.extract_keywords_tfidf(" ".join(tokens), 30)
+
         bigrams = self.getngrams(raw_tokens, 2)
 
         for ng in bigrams:
@@ -528,3 +532,14 @@ class Page:
         raw_tokens = [token.text for token in doc if not token.is_punct and not token.text in exclude_chars]
 
         return tokens, raw_tokens
+    
+
+    def extract_keywords_tfidf(self, texts, top_n=5):
+
+        vectorizer = TfidfVectorizer()
+        tfidf_matrix = vectorizer.fit_transform(texts)
+        feature_names = vectorizer.get_feature_names_out()
+        first_doc_vector = tfidf_matrix[0].T.todense()
+        tfidf_scores = [(feature_names[i], first_doc_vector[i, 0]) for i in range(len(feature_names))]
+        
+        return sorted(tfidf_scores, key=lambda x: x[1], reverse=True)[:top_n]
