@@ -51,53 +51,58 @@
 			<input type="button" value="hide all notices " onclick="toggleDetail()" class="btn btn-info" id="ebutton">
 
 			<div class="table-responsive">
-			<table id="pages" class="table table-striped table-hover">
-				<thead>
-					<tr>
-						<th></th>
-						<th>page</th>
-						<th>word count</th>
-						<th>number of notices</th>
-					</tr>
-				</thead>
-
-				<tbody>
-				{% for page in result['pages']%}
-				{% set outer_loop = loop %}
-				<tr onclick="fullerrors({{ outer_loop.index }})">
-					<td><i class="material-icons" id="i{{ outer_loop.index }}">keyboard_arrow_down</i></td>
-					<td><a href="{{ page['url'] }}" target ="_blank">{{page['url']}}</a></td>
-					<td>{{page['word_count']}}</td>
-					<td>{{page["warnings"]|length}}</td>
-				</tr>
-				<tr id="{{ outer_loop.index }}" class="error-detail">
-					<td colspan="4"><p>{{page["title"]}}</p><p>{{page["description"]}}</p><ul>{% for err in page["warnings"] %}<li>{{err|e}}</li>{% endfor %}</ul></td>
-				</tr>
-
-				<tr id="{{ outer_loop.index }}" class="table-responsive">
-					<table id = "nlp_keywords" class="table table-striped">
-						<thead>
-							<tr>
-								<th class="sortable_th">Keyword</th>
-								<th class="sortable_th">TF-IDF Score</th>
-							</tr>
-						</thead>
-						<tbody>
-						{% for key in result['nlp_keywords']%}
+				<table id="pages" class="table table-striped table-hover">
+					<thead>
 						<tr>
-							<td> {{ key['word'] }} </td>
-							<td> {{ key['score'] }} </td>
+							<th></th>
+							<th>page</th>
+							<th>word count</th>
+							<th>number of notices</th>
 						</tr>
-		
-						{% endfor %}
+					</thead>
+			
+					<tbody>
+					{% for page in result['pages'] %}
+					{% set outer_loop = loop %}
+					<tr onclick="fullerrors({{ outer_loop.index }})">
+						<td><i class="material-icons" id="i{{ outer_loop.index }}">keyboard_arrow_down</i></td>
+						<td><a href="{{ page['url'] }}" target="_blank">{{ page['url'] }}</a></td>
+						<td>{{ page['word_count'] }}</td>
+						<td>{{ page["warnings"]|length }}</td>
+					</tr>
+					<tr id="{{ outer_loop.index }}" class="error-detail">
+						<td colspan="4">
+							<p>{{ page["title"] }}</p>
+							<p>{{ page["description"] }}</p>
+							<ul>
+								{% for err in page["warnings"] %}
+								<li>{{ err|e }}</li>
+								{% endfor %}
+							</ul>
+							<!-- Tabella per le keyword e i punteggi TF-IDF -->
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>Keyword</th>
+										<th>TF-IDF Score</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for keyword in page["nlp_keywords"] %}
+									<tr>
+										<td>{{ keyword.word }}</td>
+										<td>{{ keyword.score }}</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</td>
+					</tr>
+					{% endfor %}
 					</tbody>
-					</table>
-				</tr>
-				{% endfor %}
-
-			</tbody>
-			</table>
+				</table>
 			</div>
+			
 
 			{% endif %}
 
