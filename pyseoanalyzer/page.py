@@ -521,8 +521,8 @@ class Page:
         doc = nlp(text)
 
         if remove_stop_words:
-            tokens = [token.text for token in doc if not token.is_stop]
+            tokens = [token.text for token in doc if not token.is_punct and not token.is_stop]
         else:
-            tokens = [token.text for token in doc]
+            tokens = [token.text for token in doc if not token.is_punct]
 
         return tokens
