@@ -523,6 +523,6 @@ class Page:
         if remove_stop_words:
             tokens = [token.text for token in doc if not token.is_stop]
         else:
-            tokens = [token.text for token in text]
+            tokens = [token.text for token in doc]
 
         return tokens
