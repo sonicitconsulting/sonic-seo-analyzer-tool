@@ -4,9 +4,9 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pyseoanalyzer"
-version = "2024.12.12"
+version = "2024.12.30"
 authors = [
-  {name = "Seth Black", email = "sblack@sethserver.com"},
+  {name = "SonicITConsulting", email = "SonicITConsulting@gmail.com"},
 ]
 dependencies = [
     "beautifulsoup4>=4.12.3",
@@ -52,6 +52,5 @@ classifiers = [
 seoanalyze = "pyseoanalyzer.__main__:main"
 
 [project.urls]
-Homepage = "https://github.com/sethblack/python-seo-analyzer"
-Repository = "https://github.com/sethblack/python-seo-analyzer.git"
-Issues = "https://github.com/sethblack/python-seo-analyzer/issues"
+Homepage = "https://github.com/sonicitconsulting/sonic-seo-analyzer-tool"
+Repository = "https://github.com/sonicitconsulting/sonic-seo-analyzer-tool.git"

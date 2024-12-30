@@ -14,7 +14,6 @@ from urllib3.exceptions import HTTPError
 from ftlangdetect import detect
 
 from .http import http
-from .llm_analyst import LLMSEOEnhancer
 from .stopwords import ENGLISH_STOP_WORDS
 
 TOKEN_REGEX = re.compile(r"(?u)\b\w\w+\b")
@@ -268,14 +267,6 @@ class Page:
             self.llm_analysis = self.use_llm_analyzer()
 
         return True
-
-    def use_llm_analyzer(self):
-        """
-        Use the LLM analyzer to enhance the SEO analysis
-        """
-
-        llm_enhancer = LLMSEOEnhancer()
-        return asyncio.run(llm_enhancer.enhance_seo_analysis(self.content))
 
     def word_list_freq_dist(self, wordlist):
         freq = [wordlist.count(w) for w in wordlist]

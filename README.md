@@ -14,14 +14,6 @@ Installation
 pip install pyseoanalyzer
 ```
 
-### Docker
-
-The docker image is available on [Docker Hub](https://hub.docker.com/r/sethblack/python-seo-analyzer) and can be run with the same command-line arguments as the script.
-
-```
-docker run sethblack/python-seo-analyzer [ARGS ...]
-```
-
 Command-line Usage
 ------------------
 
@@ -75,16 +67,6 @@ output = analyze(site, sitemap, follow_links=False)
 print(output)
 ```
 
-Alternatively, you can run the analysis as a script from the seoanalyzer folder.
-
-```sh
-python -m seoanalyzer https://www.sethserver.com/ -f html > results.html
-```
-
-AI Optimization
----------------
-
-The first pass of AI optimization features use Anthropic's `claude-3-sonnet-20240229` model to evaluate the content of the site. You will need to have an API key from [Anthropic](https://www.anthropic.com/) to use this feature. The API key needs to be set as the environment variable `ANTHROPIC_API_KEY`. I recommend using a `.env` file to set this variable. Once the API key is set, the AI optimization features can be enabled with the `--run-llm-analysis` flag.
 
 Notes
 -----
