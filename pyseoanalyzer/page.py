@@ -5,6 +5,7 @@ import lxml.html as lh
 import os
 import re
 import trafilatura
+import spacy
 
 from bs4 import BeautifulSoup
 from collections import Counter
@@ -12,6 +13,7 @@ from string import punctuation
 from urllib.parse import urlsplit
 from urllib3.exceptions import HTTPError
 from py3langid.langid import LanguageIdentifier, MODEL_FILE 
+from spacy.cli import download
 
 from .http import http
 from .stopwords import ENGLISH_STOP_WORDS
@@ -292,6 +294,10 @@ class Page:
         raw_tokens = self.raw_tokenize(page_text)
         self.total_word_count = len(raw_tokens)
 
+        tokens_2 = self.tokenize_text(page_text, language)
+        tokens_3 = self.tokenize_text(page_text, language, True)
+
+
         bigrams = self.getngrams(raw_tokens, 2)
 
         for ng in bigrams:
@@ -490,3 +496,33 @@ class Page:
         lang, prob = identifier.classify(text)
 
         return lang
+    
+    def tokenize_text(self, text, language, remove_stop_words=False):
+
+        if language == 'it':
+            model = 'it_core_news_md'
+        elif language == 'en':
+            model = 'en_core_web_sm'
+        elif language == 'fr':
+            model = 'fr_core_news_md'
+        elif language == 'es':
+            model = 'es_core_news_md'
+        elif language == 'de':
+            model = 'de_core_news_md'
+        else:
+            model = 'en_core_web_sm'
+
+        try:
+            nlp = spacy.load(model)
+        except OSError:
+            download(model)
+            nlp = spacy.load(model)
+
+        doc = nlp(text)
+
+        if remove_stop_words:
+            tokens = [token.text for token in doc if not token.is_stop]
+        else:
+            tokens = [token.text for token in text]
+
+        return tokens
