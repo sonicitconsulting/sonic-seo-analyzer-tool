@@ -73,7 +73,28 @@
 				<tr id="{{ outer_loop.index }}" class="error-detail">
 					<td colspan="4"><p>{{page["title"]}}</p><p>{{page["description"]}}</p><ul>{% for err in page["warnings"] %}<li>{{err|e}}</li>{% endfor %}</ul></td>
 				</tr>
+
+				<tr id="{{ outer_loop.index }}" class="table-responsive">
+					<table id = "nlp_keywords" class="table table-striped">
+						<thead>
+							<tr>
+								<th class="sortable_th">Keyword</th>
+								<th class="sortable_th">TF-IDF Score</th>
+							</tr>
+						</thead>
+						<tbody>
+						{% for key in result['nlp_keywords']%}
+						<tr>
+							<td> {{ key['word'] }} </td>
+							<td> {{ key['score'] }} </td>
+						</tr>
+		
+						{% endfor %}
+					</tbody>
+					</table>
+				</tr>
 				{% endfor %}
+
 			</tbody>
 			</table>
 			</div>

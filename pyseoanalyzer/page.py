@@ -542,6 +542,8 @@ class Page:
         tfidf_matrix = vectorizer.fit_transform(texts)
         feature_names = vectorizer.get_feature_names_out()
         first_doc_vector = tfidf_matrix[0].T.todense()
-        tfidf_scores = [(feature_names[i], first_doc_vector[i, 0]) for i in range(len(feature_names))]
-        
-        return sorted(tfidf_scores, key=lambda x: x[1], reverse=True)[:top_n]
+        tfidf_scores = [
+            {"word": feature_names[i], "score": first_doc_vector[i, 0]}
+            for i in range(len(feature_names))
+        ]
+        return sorted(tfidf_scores, key=lambda x: x["score"], reverse=True)[:top_n]
