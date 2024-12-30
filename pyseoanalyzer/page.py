@@ -11,7 +11,7 @@ from collections import Counter
 from string import punctuation
 from urllib.parse import urlsplit
 from urllib3.exceptions import HTTPError
-from ftlangdetect import detect
+from py3langid.langid import LanguageIdentifier, MODEL_FILE 
 
 from .http import http
 from .stopwords import ENGLISH_STOP_WORDS
@@ -496,6 +496,8 @@ class Page:
     
     def rtv_text_language(self, text):
 
-        result = detect(text=text, low_memory=True)
+        identifier = LanguageIdentifier.from_pickled_model(MODEL_FILE, norm_probs=True) 
 
-        return result
+        lang, prob = identifier.classify(text)
+
+        return lang
