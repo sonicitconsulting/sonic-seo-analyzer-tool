@@ -290,12 +290,10 @@ class Page:
 
         language = self.rtv_text_language(page_text)
 
-        tokens = self.tokenize(page_text)
-        raw_tokens = self.raw_tokenize(page_text)
-        self.total_word_count = len(raw_tokens)
-
         doc = self.create_nlp_document(page_text, language)
-        tokens_2, tokens_3 = self.tokenize_text(doc)
+        tokens, raw_tokens = self.tokenize_text(doc)
+
+        self.total_word_count = len(raw_tokens)
 
         bigrams = self.getngrams(raw_tokens, 2)
 
