@@ -297,7 +297,7 @@ class Page:
 
         self.total_word_count = len(raw_tokens)
 
-        keywords = self.extract_keywords_tfidf(" ".join(tokens), 30)
+        keywords = self.extract_keywords_tfidf([" ".join(tokens)], 30)
 
         bigrams = self.getngrams(raw_tokens, 2)
 
