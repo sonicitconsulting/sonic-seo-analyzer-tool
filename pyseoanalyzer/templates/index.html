@@ -64,7 +64,7 @@
 					<tbody>
 					{% for page in result['pages'] %}
 					{% set outer_loop = loop %}
-					<tr onclick="fullerrors({{ outer_loop.index }})">
+					<tr onclick="fullerrors({{outer_loop.index}})">
 						<td><i class="material-icons" id="i{{ outer_loop.index }}">keyboard_arrow_down</i></td>
 						<td><a href="{{ page['url'] }}" target="_blank">{{ page['url'] }}</a></td>
 						<td>{{ page['word_count'] }}</td>
@@ -106,7 +106,7 @@
 
 			{% endif %}
 
-
+			<!--
 			{% if result['keywords'] %}
 			<h2 id="keyword-section">keyword analysis:</h2>
 			<div class="table-responsive">
@@ -127,7 +127,8 @@
 				{% endfor %}
 			</tbody>
 			</table>
-		</div>
+			</div>
+			-->
 			{% endif %}
 			{% endif %}
 		</div>
