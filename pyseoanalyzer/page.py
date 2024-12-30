@@ -102,6 +102,7 @@ class Page:
         self.stem_to_word = {}
         self.content: str = None
         self.content_hash: str = None
+        self.nlp_keywords = []
 
         if analyze_headings:
             self.headings = {}
@@ -128,6 +129,7 @@ class Page:
             "trigrams": self.trigrams,
             "warnings": self.warnings,
             "content_hash": self.content_hash,
+            "nlp_keywords": self.nlp_keywords
         }
 
         if self.analyze_headings:
@@ -297,7 +299,7 @@ class Page:
 
         self.total_word_count = len(raw_tokens)
 
-        keywords = self.extract_keywords_tfidf([" ".join(tokens)], 30)
+        self.nlp_keywords = self.extract_keywords_tfidf([" ".join(tokens)], 30)
 
         bigrams = self.getngrams(raw_tokens, 2)
 
