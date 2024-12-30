@@ -67,6 +67,19 @@ output = analyze(site, sitemap, follow_links=False)
 print(output)
 ```
 
+NLP
+-----
+
+NLP functions are now performed by Spacy. 
+
+Supported languages are
+
+ - English
+ - Italian
+ - German
+ - French
+ - Spanish
+
 
 Notes
 -----
