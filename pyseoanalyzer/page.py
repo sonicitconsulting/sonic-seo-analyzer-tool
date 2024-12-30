@@ -68,7 +68,6 @@ class Page:
         analyze_headings=False,
         analyze_extra_tags=False,
         encoding="utf-8",
-        run_llm_analysis=False,
     ):
         """
         Variables go here, *not* outside of __init__
@@ -80,7 +79,6 @@ class Page:
         self.analyze_headings = analyze_headings
         self.analyze_extra_tags = analyze_extra_tags
         self.encoding = encoding
-        self.run_llm_analysis = run_llm_analysis
         self.title: str = ""
         self.author: str = ""
         self.description: str = ""
@@ -100,9 +98,6 @@ class Page:
         self.stem_to_word = {}
         self.content: str = None
         self.content_hash: str = None
-
-        if run_llm_analysis:
-            self.llm_analysis = {}
 
         if analyze_headings:
             self.headings = {}
@@ -136,9 +131,6 @@ class Page:
 
         if self.analyze_extra_tags:
             context["additional_info"] = self.additional_info
-
-        if self.run_llm_analysis:
-            context["llm_analysis"] = self.llm_analysis
 
         return context
 
@@ -262,9 +254,6 @@ class Page:
 
         if self.analyze_extra_tags:
             self.analyze_additional_tags(soup_unmodified)
-
-        if self.run_llm_analysis:
-            self.llm_analysis = self.use_llm_analyzer()
 
         return True
 
