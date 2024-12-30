@@ -11,6 +11,7 @@ from collections import Counter
 from string import punctuation
 from urllib.parse import urlsplit
 from urllib3.exceptions import HTTPError
+from ftlangdetect import detect
 
 from .http import http
 from .llm_analyst import LLMSEOEnhancer
@@ -239,18 +240,6 @@ class Page:
                 f"Keywords should be avoided as they are a spam indicator and no longer used by Search Engines"
             )
 
-        # use trafulatura to extract the content
-        content = trafilatura.extract(
-            raw_html,
-            include_links=True,
-            include_formatting=False,
-            include_tables=True,
-            include_images=True,
-            output_format="json",
-        )
-
-        self.content = json.loads(content) if content else None
-
         self.content = self.get_all_text_from_html(raw_html)
 
         # remove comments, they screw with BeautifulSoup
@@ -316,6 +305,9 @@ class Page:
         return zip(*[D[i:] for i in range(n)])
 
     def process_text(self, page_text):
+
+        language = self.rtv_text_language(page_text)
+
         tokens = self.tokenize(page_text)
         raw_tokens = self.raw_tokenize(page_text)
         self.total_word_count = len(raw_tokens)
@@ -510,3 +502,9 @@ class Page:
         
         return {"text":text,
                 "comments":""}
+    
+    def rtv_text_language(self, text):
+
+        result = detect(text=text, low_memory=True)
+
+        return result
