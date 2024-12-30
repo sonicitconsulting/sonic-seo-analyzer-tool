@@ -518,11 +518,13 @@ class Page:
             download(model)
             nlp = spacy.load(model)
 
+        exclude_chars = {"|", "/", "\\", "-", "_", "*", "&"}
+
         doc = nlp(text)
 
         if remove_stop_words:
-            tokens = [token.text for token in doc if not token.is_punct and not token.is_stop]
+            tokens = [token.text for token in doc if not token.is_punct and not token.text in exclude_chars and not token.is_stop]
         else:
-            tokens = [token.text for token in doc if not token.is_punct]
+            tokens = [token.text for token in doc if not token.is_punct and not token.text in exclude_chars]
 
         return tokens
