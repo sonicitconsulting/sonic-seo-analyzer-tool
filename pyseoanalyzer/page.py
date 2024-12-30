@@ -294,9 +294,8 @@ class Page:
         raw_tokens = self.raw_tokenize(page_text)
         self.total_word_count = len(raw_tokens)
 
-        tokens_2 = self.tokenize_text(page_text, language)
-        tokens_3 = self.tokenize_text(page_text, language, True)
-
+        doc = self.create_nlp_document(page_text, language)
+        tokens_2, tokens_3 = self.tokenize_text(doc)
 
         bigrams = self.getngrams(raw_tokens, 2)
 
@@ -497,7 +496,7 @@ class Page:
 
         return lang
     
-    def tokenize_text(self, text, language, remove_stop_words=False):
+    def create_nlp_document(self, text, language):
 
         if language == 'it':
             model = 'it_core_news_md'
@@ -518,13 +517,16 @@ class Page:
             download(model)
             nlp = spacy.load(model)
 
-        exclude_chars = {"|", "/", "\\", "-", "_", "*", "&"}
-
         doc = nlp(text)
 
-        if remove_stop_words:
-            tokens = [token.text for token in doc if not token.is_punct and not token.text in exclude_chars and not token.is_stop]
-        else:
-            tokens = [token.text for token in doc if not token.is_punct and not token.text in exclude_chars]
+        return doc
 
-        return tokens
+    def tokenize_text(self, doc):
+
+        exclude_chars = {"|", "/", "\\", "-", "_", "*", "&"}
+
+        tokens = [token.text for token in doc if not token.is_punct and not token.text in exclude_chars and not token.is_stop]
+
+        raw_tokens = [token.text for token in doc if not token.is_punct and not token.text in exclude_chars]
+
+        return tokens, raw_tokens
