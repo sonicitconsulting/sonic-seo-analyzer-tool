@@ -72,21 +72,30 @@
 						</tr>
 					</thead>
 					<tbody>
-						{% for item in result['duplicate_pages'] %}
+						{% for group in result['duplicate_pages'] %}
 						<tr>
-							<td><a href="{{ item['original'] }}" target="_blank">{{ item['original'] }}</a></td>
+							<!-- Prima colonna: URL originale -->
+							<td><a href="{{ group[0] }}" target="_blank">{{ group[0] }}</a></td>
+							
+							<!-- Seconda colonna: URL duplicati -->
 							<td>
-								<ul>
-									{% for duplicate in item['duplicates'] %}
-									<li><a href="{{ duplicate }}" target="_blank">{{ duplicate }}</a></li>
+								{% if group[1:] %}
+									<ul>
+									{% for duplicate in group[1:] %}
+										<li><a href="{{ duplicate }}" target="_blank">{{ duplicate }}</a></li>
 									{% endfor %}
-								</ul>
+									</ul>
+								{% else %}
+									<p>No duplicates found.</p>
+								{% endif %}
 							</td>
 						</tr>
 						{% endfor %}
 					</tbody>
 				</table>
 			</div>
+			
+			
 			{% endif %}
 
 
