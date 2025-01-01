@@ -107,19 +107,24 @@
 
 			{% if result['sitemap']['incoherent_structure']['only_in_urls'] or  result['sitemap']['incoherent_structure']['only_in_locs']%}
 			<div id="incoherent_structure">
+				<br>
 				<h3>Incoherent Structure</h3>
-				<p><strong>Only in URLs:</strong></p>
+				{% if len(result['sitemap']['incoherent_structure']['only_in_urls']) > 0 %}
+				<p><strong>Only Site Structure:</strong></p>
 				<ul>
 					{% for url in result['sitemap']['incoherent_structure']['only_in_urls'] %}
 						<li>{{ url }}</li>
 					{% endfor %}
 				</ul>
-				<p><strong>Only in Locs:</strong></p>
+				{% endif %}
+				{% if len(result['sitemap']['incoherent_structure']['only_in_locs']) > 0 %}
+				<p><strong>Only Sitemap.xml:</strong></p>
 				<ul>
 					{% for url in result['sitemap']['incoherent_structure']['only_in_locs'] %}
 						<li>{{ url }}</li>
 					{% endfor %}
 				</ul>
+				{% endif %}
 			{% endif %}
 
 		{% endif %}
