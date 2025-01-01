@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pyseoanalyzer"
-version = "2024.12.30"
+version = "2025.01.01"
 authors = [
   {name = "SonicITConsulting", email = "SonicITConsulting@gmail.com"},
 ]
