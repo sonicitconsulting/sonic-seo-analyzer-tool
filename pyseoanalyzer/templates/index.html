@@ -109,7 +109,7 @@
 			<div id="incoherent_structure">
 				<br>
 				<h3>Incoherent Structure</h3>
-				{% if len(result['sitemap']['incoherent_structure']['only_in_urls']) > 0 %}
+				{% if result['sitemap']['incoherent_structure']['only_in_urls'] %}
 				<p><strong>Only Site Structure:</strong></p>
 				<ul>
 					{% for url in result['sitemap']['incoherent_structure']['only_in_urls'] %}
@@ -117,7 +117,7 @@
 					{% endfor %}
 				</ul>
 				{% endif %}
-				{% if len(result['sitemap']['incoherent_structure']['only_in_locs']) > 0 %}
+				{% if result['sitemap']['incoherent_structure']['only_in_locs'] %}
 				<p><strong>Only Sitemap.xml:</strong></p>
 				<ul>
 					{% for url in result['sitemap']['incoherent_structure']['only_in_locs'] %}
