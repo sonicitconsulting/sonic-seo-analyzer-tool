@@ -26,8 +26,7 @@
 		</div>
 
 		{%if result['fatal_error']%}
-		<p>There was a fatal error when trying to format the output file as a webpage. Confirm that there is an output.json file in the directory. If not, you can reference the 
-			<a href="https://github.com/sethblack/python-seo-analyzer">python-seo-analyzer documentation</a></p>
+		<p>There was a fatal error when trying to format the output file as a webpage. Confirm that there is an output.json file in the directory.
 			{% else %}
 			<p>total time: {{result['total_time']|round(2)}} seconds </p>
 			<div>
@@ -35,7 +34,6 @@
 				<ul>
 					<li><a href="#sitemap-section">Sitemap analysis</a></li>
 					<li><a href="#page-section">Page analysis</a></li>
-					<li><a href="#keyword-section">Keyword analysis</a></li>
 				</ul>
 			</div>
 
@@ -94,10 +92,16 @@
 					</tbody>
 				</table>
 			</div>
-			
-			
 			{% endif %}
 
+			{% if result['robots_content'] %}
+			<div class="robots-content">
+				<h3>Robots.txt Content</h3>
+				<pre>
+					{{ result['sitemap']['robots_content'].replace('\n', '<br>')|safe }}
+				</pre>
+			</div>
+			{% endif %}
 
 		{% endif %}
 
