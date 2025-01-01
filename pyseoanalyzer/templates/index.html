@@ -108,37 +108,29 @@
 			{% if result['sitemap']['incoherent_structure']['only_in_urls'] or  result['sitemap']['incoherent_structure']['only_in_locs']%}
 			<div id="incoherent_structure">
 				<h3>Incoherent Structure</h3>
-				<ul>
-					{% for item in result.sitemap.incoherent_structure %}
-						<li>
-							<h2>Item {{ loop.index }}</h2>
-			
-							<!-- Section for 'only_in_urls' -->
-							<p><strong>Only in URLs:</strong></p>
-							{% if item.only_in_urls %}
-								<ul>
-									{% for url in item.only_in_urls %}
-										<li>{{ url }}</li>
-									{% endfor %}
-								</ul>
-							{% else %}
-								<p>No URLs found in <code>only_in_urls</code>.</p>
-							{% endif %}
-			
-							<!-- Section for 'only_in_locs' -->
-							<p><strong>Only in Locs:</strong></p>
-							{% if item.only_in_locs %}
-								<ul>
-									{% for loc in item.only_in_locs %}
-										<li>{{ loc }}</li>
-									{% endfor %}
-								</ul>
-							{% else %}
-								<p>No Locs found in <code>only_in_locs</code>.</p>
-							{% endif %}
-						</li>
-					{% endfor %}
-				</ul>
+				{% for item in report.sitemap.incoherent_structure %}
+				<p><strong>Only in URLs:</strong></p>
+				{% if item.only_in_urls %}
+					<ul>
+						{% for url in item.only_in_urls %}
+							<li>{{ url }}</li>
+						{% endfor %}
+					</ul>
+				{% else %}
+					<p>No URLs found in <code>only_in_urls</code>.</p>
+				{% endif %}
+		
+				<p><strong>Only in Locs:</strong></p>
+				{% if item.only_in_locs %}
+					<ul>
+						{% for loc in item.only_in_locs %}
+							<li>{{ loc }}</li>
+						{% endfor %}
+					</ul>
+				{% else %}
+					<p>No Locs found in <code>only_in_locs</code>.</p>
+				{% endif %}
+			{% endfor %}
 			</div>
 			{% endif %}
 
