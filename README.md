@@ -80,7 +80,7 @@ Supported languages are
  - French
  - Spanish
 
- Keyword research is made by TF-IDF methods
+ Keyword research is made by TF-IDF methods.
 
 
 Notes

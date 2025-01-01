@@ -47,8 +47,13 @@
 			</ul>
 			{% endif %}
 
-			{% if result['pages'] %}
-			<h2 id="page-section">page analysis:</h2>
+		
+		{% if result['sitemap'] %}
+			<h2 id="page-section">Robots and Sitemap analysis:</h2>
+		{% endif %}
+
+		{% if result['pages'] %}
+			<h2 id="page-section">Page analysis:</h2>
 			<input type="button" value="hide all notices " onclick="toggleDetail()" class="btn btn-info" id="ebutton">
 
 			<div class="table-responsive">
