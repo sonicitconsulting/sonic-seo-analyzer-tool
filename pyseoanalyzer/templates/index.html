@@ -33,13 +33,14 @@
 			<div>
 				<h2>go to:</h2>
 				<ul>
-					<li><a href="#page-section">page analysis</a></li>
-					<li><a href="#keyword-section">keyword analysis</a></li>
+					<li><a href="#sitemap-section">Sitemap analysis</a></li>
+					<li><a href="#page-section">Page analysis</a></li>
+					<li><a href="#keyword-section">Keyword analysis</a></li>
 				</ul>
 			</div>
 
 			{% if result['errors']%}
-			<h2>errors:</h2>
+			<h2>Errors:</h2>
 			<ul>
 				{% for e in result['errors'] %}
 				<li>{{e}}</li>
@@ -49,7 +50,27 @@
 
 		
 		{% if result['sitemap'] %}
-			<h2 id="page-section">Robots and Sitemap analysis:</h2>
+			<h2 id="sitemap-section">Robots and Sitemap analysis:</h2>
+
+			{% if result['sitemap']['errors'] %}
+			<h1>Errors:</h1>
+			<ul>
+				{% for e in result['sitemap']['errors'] %}
+				<li>{{e}}</li>
+				{% endfor %}
+			</ul>
+			{% endif %}
+
+			{% if result['duplicate_pages'] %}
+			<h1>Duplicate pages:</h1>
+			<ul>
+				{% for e in result['duplicate_pages']%}
+				<li>{{e}}</li>
+				{% endfor %}
+			</ul>
+			{% endif %}
+
+
 		{% endif %}
 
 		{% if result['pages'] %}
