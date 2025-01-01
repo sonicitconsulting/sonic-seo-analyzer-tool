@@ -108,7 +108,7 @@
 			{% if result['sitemap']['incoherent_structure']['only_in_urls'] or  result['sitemap']['incoherent_structure']['only_in_locs']%}
 			<div id="incoherent_structure">
 				<h3>Incoherent Structure</h3>
-				{% for item in report.sitemap.incoherent_structure %}
+				{% for item in result.sitemap.incoherent_structure %}
 				<p><strong>Only in URLs:</strong></p>
 				{% if item.only_in_urls %}
 					<ul>
