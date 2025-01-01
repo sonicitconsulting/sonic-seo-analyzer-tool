@@ -98,7 +98,7 @@
 			<div class="robots-content">
 				<h3>Robots.txt Content</h3>
 				<pre>
-					{{ result['sitemap']['robots_content'].replace('\n', '<br>')|safe }}
+					{{ result['sitemap']['robots_content'].replace('\n', '<br>').lstrip()|safe }}
 				</pre>
 			</div>
 			{% endif %}
