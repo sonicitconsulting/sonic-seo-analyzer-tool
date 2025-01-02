@@ -153,10 +153,12 @@
 						<td>{{ page['word_count'] }}</td>
 						<td>{{ page["warnings"]|length }}</td>
 					</tr>
+
 					<tr id="{{ outer_loop.index }}" class="error-detail">
 						<td colspan="4">
-							<p>{{ page["title"] }}</p>
-							<p>{{ page["description"] }}</p>
+							<p>Title tag: {{ page["title"] }}</p>
+							<p>Description tag: {{ page["description"] }}</p>
+							<p>Is page Mobile Friendly: {{ page["is_mobile_friendly"] }}</p>
 							<ul>
 								{% for err in page["warnings"] %}
 								<li>{{ err|e }}</li>
