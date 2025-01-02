@@ -103,6 +103,7 @@ class Page:
         self.content: str = None
         self.content_hash: str = None
         self.nlp_keywords = []
+        self.is_mobile_friendly: bool = False
 
         if analyze_headings:
             self.headings = {}
@@ -129,7 +130,8 @@ class Page:
             "trigrams": self.trigrams,
             "warnings": self.warnings,
             "content_hash": self.content_hash,
-            "nlp_keywords": self.nlp_keywords
+            "nlp_keywords": self.nlp_keywords,
+            "is_mobile_friendly": self.is_mobile_friendly
         }
 
         if self.analyze_headings:
@@ -261,7 +263,10 @@ class Page:
         if self.analyze_extra_tags:
             self.analyze_additional_tags(soup_unmodified)
 
+        self.is_mobile_friendly = self.is_mobile_friendly(raw_html)
+        
         return True
+
 
     def word_list_freq_dist(self, wordlist):
         freq = [wordlist.count(w) for w in wordlist]
@@ -535,7 +540,6 @@ class Page:
 
         return tokens, raw_tokens
     
-
     def extract_keywords_tfidf(self, texts, top_n=5):
 
         vectorizer = TfidfVectorizer()
@@ -547,3 +551,17 @@ class Page:
             for i in range(len(feature_names))
         ]
         return sorted(tfidf_scores, key=lambda x: x["score"], reverse=True)[:top_n]
+    
+    def is_mobile_friendly(self, html):
+
+        soup = BeautifulSoup(html, "html.parser")
+        # Controlla la presenza del meta-tag "viewport"
+        viewport_meta = soup.find("meta", attrs={"name": "viewport"})
+        if viewport_meta and "width=device-width" in viewport_meta.get("content", ""):
+            return True
+        # Cerca media query CSS che indicano responsività
+        styles = soup.find_all("style")
+        for style in styles:
+            if "@media" in style.text:
+                return True
+        return False
