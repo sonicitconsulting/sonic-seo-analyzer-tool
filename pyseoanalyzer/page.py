@@ -263,8 +263,8 @@ class Page:
         if self.analyze_extra_tags:
             self.analyze_additional_tags(soup_unmodified)
 
-        self.is_mobile_friendly = self.is_mobile_friendly(raw_html)
-        
+        self.is_mobile_friendly = self.mobile_friendly_check(raw_html)
+
         return True
 
 
@@ -552,7 +552,7 @@ class Page:
         ]
         return sorted(tfidf_scores, key=lambda x: x["score"], reverse=True)[:top_n]
     
-    def is_mobile_friendly(self, html):
+    def mobile_friendly_check(self, html):
 
         soup = BeautifulSoup(html, "html.parser")
         # Controlla la presenza del meta-tag "viewport"
