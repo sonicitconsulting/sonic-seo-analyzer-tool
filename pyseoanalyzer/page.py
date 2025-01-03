@@ -106,7 +106,6 @@ class Page:
         self.content: str = None
         self.content_hash: str = None
         self.nlp_keywords = []
-        self.ngrams = []
         self.is_mobile_friendly: bool = False
 
         if analyze_headings:
@@ -135,8 +134,7 @@ class Page:
             "warnings": self.warnings,
             "content_hash": self.content_hash,
             "nlp_keywords": self.nlp_keywords,
-            "is_mobile_friendly": self.is_mobile_friendly,
-            "n_grams": self.ngrams
+            "is_mobile_friendly": self.is_mobile_friendly
         }
 
         if self.analyze_headings:
@@ -310,15 +308,13 @@ class Page:
 
         self.nlp_keywords = self.extract_keywords_tfidf([" ".join(tokens)], 30)
 
-        self.ngrams = self.extract_n_grams(doc)
-
-        bigrams = self.getngrams(raw_tokens, 2)
+        bigrams = self.extract_n_grams(doc, 2)
 
         for ng in bigrams:
             vt = " ".join(ng)
             self.bigrams[vt] += 1
 
-        trigrams = self.getngrams(raw_tokens, 3)
+        trigrams = self.extract_n_grams(doc, 3)
 
         for ng in trigrams:
             vt = " ".join(ng)
