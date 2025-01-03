@@ -30,21 +30,9 @@
 			{% else %}
 			<p>total time: {{result['total_time']|round(2)}} seconds </p>
 
-			<!-- <div>
-				<h2>go to:</h2>
-				<ul>
-					<li><a href="#sitemap-section">Sitemap analysis</a></li>
-					<li><a href="#page-section">Page analysis</a></li>
-				</ul>
-			</div> -->
-
-			<nav aria-label="breadcrumb">
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="#sitemap-section">Sitemap analysis</a></li>
-					<li class="breadcrumb-item"><a href="#page-section">Page analysis</a></li>
-					<li class="breadcrumb-item active" aria-current="page">Current Page</li>
-				</ol>
-			</nav>
+			<div>
+				<h3>go to:</h3> <a href="#sitemap-section">Sitemap analysis</a> &nbsp; <a href="#page-section">Page analysis</a></li> &nbsp; <a href="#semantic-section">Semantic analysis</a></li>
+			</div>
 
 			{% if result['errors']%}
 			<h2>Errors:</h2>
@@ -200,7 +188,7 @@
 
 			{% endif %}
 			<br>
-			<h2 id="page-section">Semantic analysis</h2>
+			<h2 id="semantic-section">Semantic analysis</h2>
 			<div id="semantic-similitude">
 				<h3>Semantic Similitude</h3>
 				<img src="{{ result['heatmap_path'] }}" alt="Similarity Heatmap">
