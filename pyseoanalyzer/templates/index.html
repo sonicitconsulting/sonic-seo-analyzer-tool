@@ -156,9 +156,9 @@
 
 					<tr id="{{ outer_loop.index }}" class="error-detail">
 						<td colspan="4">
-							<p>Title tag: {{ page["title"] }}</p>
-							<p>Description tag: {{ page["description"] }}</p>
-							<p>Is page Mobile Friendly: {{ page["is_mobile_friendly"] }}</p>
+							<p><u>Title tag:</u> {{ page["title"] }}</p>
+							<p><u>Description tag:</u> {{ page["description"] }}</p>
+							<p><u>Is page Mobile Friendly:</u> {{ page["is_mobile_friendly"] }}</p>
 							<ul>
 								{% for err in page["warnings"] %}
 								<li>{{ err|e }}</li>
@@ -190,7 +190,12 @@
 			
 
 			{% endif %}
-
+			<br>
+			<h2 id="page-section">Semantic analysis</h2>
+			<div id="semantic-similitude">
+				<h3>Semantic Similitude</h3>
+				<img src="{{ result['heatmap_path'] }}" alt="Heatmap della Similarità">
+			</div>
 			<!--
 			{% if result['keywords'] %}
 			<h2 id="keyword-section">keyword analysis:</h2>
