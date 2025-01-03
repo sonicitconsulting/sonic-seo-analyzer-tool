@@ -572,10 +572,11 @@ class Page:
     
     def extract_n_grams(self, doc, n=3):
 
-        tokens = [token.text for token in doc if not token.is_punct and not token.text in EXCLUDE_CHARS and not token.is_stop]
+        tokens = [token for token in doc if not token.is_punct and token.text not in EXCLUDE_CHARS and not token.is_stop]
 
+    # Genera gli n-grammi
         ngrams = [
-            " ".join(token.text for token in tokens[i:i + n])
+            " ".join(tokens[i + j].text for j in range(n))
             for i in range(len(tokens) - n + 1)
         ]
         return ngrams
