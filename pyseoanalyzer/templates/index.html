@@ -194,31 +194,14 @@
 			<h2 id="page-section">Semantic analysis</h2>
 			<div id="semantic-similitude">
 				<h3>Semantic Similitude</h3>
-				<img src="{{ result['heatmap_path'] }}" alt="Heatmap della Similarità">
+				<img src="{{ result['heatmap_path'] }}" alt="Similarity Heatmap">
 			</div>
-			<!--
-			{% if result['keywords'] %}
-			<h2 id="keyword-section">keyword analysis:</h2>
-			<div class="table-responsive">
-			<table id = "keywords" class="table table-striped">
-				<thead>
-					<tr>
-						<th class="sortable_th">keywords</th>
-						<th class="sortable_th">count</th>
-					</tr>
-				</thead>
-				<tbody>
-				{% for key in result['keywords']%}
-				<tr>
-					<td> {{ key['word'] }} </td>
-					<td> {{ key['count'] }} </td>
-				</tr>
 
-				{% endfor %}
-			</tbody>
-			</table>
+			<div id="semantic-similitude">
+				<h3>Keyword Graph</h3>
+				<img src="{{ result['graph_path'] }}" alt="Keyword Graph">
 			</div>
-			-->
+
 			{% endif %}
 			{% endif %}
 		</div>
