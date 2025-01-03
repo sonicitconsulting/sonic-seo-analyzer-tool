@@ -103,6 +103,7 @@ class Page:
         self.content: str = None
         self.content_hash: str = None
         self.nlp_keywords = []
+        self.ngrams = []
         self.is_mobile_friendly: bool = False
 
         if analyze_headings:
@@ -131,7 +132,8 @@ class Page:
             "warnings": self.warnings,
             "content_hash": self.content_hash,
             "nlp_keywords": self.nlp_keywords,
-            "is_mobile_friendly": self.is_mobile_friendly
+            "is_mobile_friendly": self.is_mobile_friendly,
+            "n_grams": self.ngrams
         }
 
         if self.analyze_headings:
@@ -267,7 +269,6 @@ class Page:
 
         return True
 
-
     def word_list_freq_dist(self, wordlist):
         freq = [wordlist.count(w) for w in wordlist]
         return dict(zip(wordlist, freq))
@@ -305,6 +306,8 @@ class Page:
         self.total_word_count = len(raw_tokens)
 
         self.nlp_keywords = self.extract_keywords_tfidf([" ".join(tokens)], 30)
+
+        self.ngrams = self.extract_n_grams(tokens)
 
         bigrams = self.getngrams(raw_tokens, 2)
 
@@ -565,3 +568,11 @@ class Page:
             if "@media" in style.text:
                 return True
         return False
+    
+    def extract_n_grams(self, tokens, n=3):
+
+        ngrams = [
+            " ".join(token.text for token in tokens[i:i + n])
+            for i in range(len(tokens) - n + 1)
+        ]
+        return ngrams
