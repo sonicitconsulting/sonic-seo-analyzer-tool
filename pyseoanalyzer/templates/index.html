@@ -29,13 +29,22 @@
 		<p>There was a fatal error when trying to format the output file as a webpage. Confirm that there is an output.json file in the directory.
 			{% else %}
 			<p>total time: {{result['total_time']|round(2)}} seconds </p>
-			<div>
+
+			<!-- <div>
 				<h2>go to:</h2>
 				<ul>
 					<li><a href="#sitemap-section">Sitemap analysis</a></li>
 					<li><a href="#page-section">Page analysis</a></li>
 				</ul>
-			</div>
+			</div> -->
+
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="#sitemap-section">Sitemap analysis</a></li>
+					<li class="breadcrumb-item"><a href="#page-section">Page analysis</a></li>
+					<li class="breadcrumb-item active" aria-current="page">Current Page</li>
+				</ol>
+			</nav>
 
 			{% if result['errors']%}
 			<h2>Errors:</h2>
