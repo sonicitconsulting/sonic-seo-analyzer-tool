@@ -59,6 +59,9 @@ IMAGE_EXTENSIONS = set(
     ]
 )
 
+EXCLUDE_CHARS = set(["|", "/", "\\", "-", "_", "*", "&"])
+
+
 
 class Page:
     """
@@ -307,7 +310,7 @@ class Page:
 
         self.nlp_keywords = self.extract_keywords_tfidf([" ".join(tokens)], 30)
 
-        self.ngrams = self.extract_n_grams(tokens)
+        self.ngrams = self.extract_n_grams(doc)
 
         bigrams = self.getngrams(raw_tokens, 2)
 
@@ -535,11 +538,9 @@ class Page:
 
     def tokenize_text(self, doc):
 
-        exclude_chars = {"|", "/", "\\", "-", "_", "*", "&"}
+        tokens = [token.text for token in doc if not token.is_punct and not token.text in EXCLUDE_CHARS and not token.is_stop]
 
-        tokens = [token.text for token in doc if not token.is_punct and not token.text in exclude_chars and not token.is_stop]
-
-        raw_tokens = [token.text for token in doc if not token.is_punct and not token.text in exclude_chars]
+        raw_tokens = [token.text for token in doc if not token.is_punct and not token.text in EXCLUDE_CHARS]
 
         return tokens, raw_tokens
     
@@ -569,7 +570,9 @@ class Page:
                 return True
         return False
     
-    def extract_n_grams(self, tokens, n=3):
+    def extract_n_grams(self, doc, n=3):
+
+        tokens = [token.text for token in doc if not token.is_punct and not token.text in EXCLUDE_CHARS and not token.is_stop]
 
         ngrams = [
             " ".join(token.text for token in tokens[i:i + n])
