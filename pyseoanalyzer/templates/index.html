@@ -63,23 +63,34 @@
 			<tbody>
 				{% for inspection in result['ssl_inspection'] %}
 				<tr>
+					<!-- URL -->
 					<td>{{ inspection.url }}</td>
+					
+					<!-- Status -->
 					<td>{{ inspection.status }}</td>
+					
+					<!-- Message -->
 					<td>{{ inspection.message }}</td>
+					
+					<!-- Certificate Subject -->
 					<td>
 						{% if inspection.details and inspection.details.certificate_subject %}
-							{{ inspection.details.certificate_subject }}
+							{{ inspection.details.certificate_subject | join(', ') }}
 						{% else %}
 							N/A
 						{% endif %}
 					</td>
+					
+					<!-- Issuer -->
 					<td>
 						{% if inspection.details and inspection.details.issuer %}
-							{{ inspection.details.issuer }}
+							{{ inspection.details.issuer | join(', ') }}
 						{% else %}
 							N/A
 						{% endif %}
 					</td>
+					
+					<!-- Valid From -->
 					<td>
 						{% if inspection.details and inspection.details.valid_from %}
 							{{ inspection.details.valid_from }}
@@ -87,6 +98,8 @@
 							N/A
 						{% endif %}
 					</td>
+					
+					<!-- Valid To -->
 					<td>
 						{% if inspection.details and inspection.details.valid_to %}
 							{{ inspection.details.valid_to }}
@@ -98,6 +111,7 @@
 				{% endfor %}
 			</tbody>
 		</table>
+		
 		
 		{% endif %}
 		
