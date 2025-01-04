@@ -48,16 +48,57 @@
 		{% if result['ssl_report'] %}
 		<h2 id="ssl-section">SSL Report:</h2>
 		<br>
-		<p><u>Connected url</u>{% result['ssl_report']['url']%}</p>
-		<p><u>Status</u>{% result['ssl_report']['status']%}</p>
-		<p><u>Message</u>{% result['ssl_report']['message']%}</p>
-		{% if result['ssl_report']['details'] %}
-		<p><u>Certificate subject</u>{% result['ssl_report']['details']['certificate_subject']%}</p>
-		<p><u>Issuer</u>{% result['ssl_report']['details']['organizationName']%}, {% result['ssl_report']['details']['countryName']%}</p>
-		<p><u>Valid from</u>{% result['ssl_report']['details']['valid_from']%}</p>
-		<p><u>Valid to</u>{% result['ssl_report']['details']['valid_to']%}</p>
-
-		{% endif %}
+		<table>
+			<thead>
+				<tr>
+					<th>URL</th>
+					<th>Status</th>
+					<th>Message</th>
+					<th>Certificate Subject</th>
+					<th>Issuer</th>
+					<th>Valid From</th>
+					<th>Valid To</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for inspection in result['ssl_inspection'] %}
+				<tr>
+					<td>{{ inspection.url }}</td>
+					<td>{{ inspection.status }}</td>
+					<td>{{ inspection.message }}</td>
+					<td>
+						{% if inspection.details and inspection.details.certificate_subject %}
+							{{ inspection.details.certificate_subject }}
+						{% else %}
+							N/A
+						{% endif %}
+					</td>
+					<td>
+						{% if inspection.details and inspection.details.issuer %}
+							{{ inspection.details.issuer }}
+						{% else %}
+							N/A
+						{% endif %}
+					</td>
+					<td>
+						{% if inspection.details and inspection.details.valid_from %}
+							{{ inspection.details.valid_from }}
+						{% else %}
+							N/A
+						{% endif %}
+					</td>
+					<td>
+						{% if inspection.details and inspection.details.valid_to %}
+							{{ inspection.details.valid_to }}
+						{% else %}
+							N/A
+						{% endif %}
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		
 		{% endif %}
 		
 		{% if result['sitemap'] %}
