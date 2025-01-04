@@ -201,8 +201,30 @@
 				<img src="{{ result['graph_path'] }}" alt="Keyword Graph">
 			</div>
 
-			<div id="ngrams">
+			<div id="trigrams">
 				<!-- Tabella per le keyword e i punteggi TF-IDF -->
+				<h3>Trigrams</h3>
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>Trigram</th>
+							<th>Count</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for element, count in result['trigrams'] %}
+						<tr>
+							<td>{{ element }}</td>
+							<td>{{ count }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+
+			<div id="digrams">
+				<!-- Tabella per le keyword e i punteggi TF-IDF -->
+				<h3>Digrams</h3>
 				<table class="table table-bordered">
 					<thead>
 						<tr>
