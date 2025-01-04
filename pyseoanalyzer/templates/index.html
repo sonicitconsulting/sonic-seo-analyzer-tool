@@ -61,21 +61,25 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% for inspection in result['ssl_report'] %}
+				{% for report in result['ssl_report'] %}
 				<tr>
 					<!-- URL -->
-					<td>{{ inspection.url }}</td>
+					<td>{{ report.url }}</td>
 					
 					<!-- Status -->
-					<td>{{ inspection.status }}</td>
+					<td>{{ report.status }}</td>
 					
 					<!-- Message -->
-					<td>{{ inspection.message }}</td>
+					<td>{{ report.message }}</td>
 					
 					<!-- Certificate Subject -->
 					<td>
-						{% if inspection.details and inspection.details.certificate_subject %}
-							{{ inspection.details.certificate_subject | join(', ') }}
+						{% if report.details and report.details.certificate_subject %}
+							{% for subject in report.details.certificate_subject %}
+								{% for entry in subject %}
+									{{ entry[0] }}: {{ entry[1] }}<br>
+								{% endfor %}
+							{% endfor %}
 						{% else %}
 							N/A
 						{% endif %}
@@ -83,8 +87,12 @@
 					
 					<!-- Issuer -->
 					<td>
-						{% if inspection.details and inspection.details.issuer %}
-							{{ inspection.details.issuer | join(', ') }}
+						{% if report.details and report.details.issuer %}
+							{% for issuer in report.details.issuer %}
+								{% for entry in issuer %}
+									{{ entry[0] }}: {{ entry[1] }}<br>
+								{% endfor %}
+							{% endfor %}
 						{% else %}
 							N/A
 						{% endif %}
@@ -92,8 +100,8 @@
 					
 					<!-- Valid From -->
 					<td>
-						{% if inspection.details and inspection.details.valid_from %}
-							{{ inspection.details.valid_from }}
+						{% if report.details and report.details.valid_from %}
+							{{ report.details.valid_from }}
 						{% else %}
 							N/A
 						{% endif %}
@@ -101,8 +109,8 @@
 					
 					<!-- Valid To -->
 					<td>
-						{% if inspection.details and inspection.details.valid_to %}
-							{{ inspection.details.valid_to }}
+						{% if report.details and report.details.valid_to %}
+							{{ report.details.valid_to }}
 						{% else %}
 							N/A
 						{% endif %}
@@ -111,6 +119,7 @@
 				{% endfor %}
 			</tbody>
 		</table>
+		
 		
 		
 		{% endif %}
