@@ -45,6 +45,20 @@
 			</ul>
 			{% endif %}
 
+		{% if result['ssl_report'] %}
+		<h2 id="ssl-section">SSL Report:</h2>
+		<br>
+		<p><u>Connected url</u>{% result['ssl_report']['url]%}</p>
+		<p><u>Status</u>{% result['ssl_report']['status]%}</p>
+		<p><u>Message</u>{% result['ssl_report']['message]%}</p>
+		{% if result['ssl_report']['details'] %}
+		<p><u>Certificate subject</u>{% result['ssl_report']['details']['certificate_subject']%}</p>
+		<p><u>Issuer</u>{% result['ssl_report']['details']['organizationName']%}, {% result['ssl_report']['details']['countryName']%}</p>
+		<p><u>Valid from</u>{% result['ssl_report']['details']['valid_from']%}</p>
+		<p><u>Valid to</u>{% result['ssl_report']['details']['valid_to']%}</p>
+
+		{% endif %}
+		{% endif %}
 		
 		{% if result['sitemap'] %}
 			<h2 id="sitemap-section">Robots and Sitemap analysis:</h2>
@@ -204,7 +218,7 @@
 
 
 			<div id="semantic-clusters">
-				<h3>Keyword Graph</h3>
+				<h3>Keyword Clusters</h3>
 				<img src="{{ result['cluster_path'] }}" alt="Cluster Graph">
 			</div>
 
