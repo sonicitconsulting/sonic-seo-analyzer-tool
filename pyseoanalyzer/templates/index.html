@@ -63,16 +63,9 @@
 			<tbody>
 				{% for report in result['ssl_report'] %}
 				<tr>
-					<!-- URL -->
 					<td>{{ report.url }}</td>
-					
-					<!-- Status -->
 					<td>{{ report.status }}</td>
-					
-					<!-- Message -->
 					<td>{{ report.message }}</td>
-					
-					<!-- Certificate Subject -->
 					<td>
 						{% if report.details and report.details.certificate_subject %}
 							{% for subject in report.details.certificate_subject %}
@@ -84,8 +77,6 @@
 							N/A
 						{% endif %}
 					</td>
-					
-					<!-- Issuer -->
 					<td>
 						{% if report.details and report.details.issuer %}
 							{% for issuer in report.details.issuer %}
@@ -97,28 +88,13 @@
 							N/A
 						{% endif %}
 					</td>
-					
-					<!-- Valid From -->
-					<td>
-						{% if report.details and report.details.valid_from %}
-							{{ report.details.valid_from }}
-						{% else %}
-							N/A
-						{% endif %}
-					</td>
-					
-					<!-- Valid To -->
-					<td>
-						{% if report.details and report.details.valid_to %}
-							{{ report.details.valid_to }}
-						{% else %}
-							N/A
-						{% endif %}
-					</td>
+					<td>{{ report.details.valid_from if report.details else 'N/A' }}</td>
+					<td>{{ report.details.valid_to if report.details else 'N/A' }}</td>
 				</tr>
 				{% endfor %}
 			</tbody>
 		</table>
+		
 		
 		
 		
