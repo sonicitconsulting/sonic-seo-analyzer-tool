@@ -18,7 +18,8 @@ dependencies = [
     "urllib3>=2.2.3",
     "py3langid>=0.3.0",
     "spacy>=3.8.3",
-    "scikit-learn>=1.6.0"
+    "scikit-learn>=1.6.0",
+    "numpy<=2.1"
 ]
 
 requires-python = ">= 3.8"
