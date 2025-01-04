@@ -48,7 +48,7 @@
 		{% if result['ssl_report'] %}
 		<h2 id="ssl-section">SSL Report:</h2>
 		<br>
-		<pre>{{ result['ssl_report'] | tojson }}</pre>
+		<pre>{{ result[] | tojson }}</pre>
 		<table>
 			<thead>
 				<tr>
@@ -62,37 +62,27 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% for report in result['ssl_report'] %}
 				<tr>
-					<td>{{ report.url }}</td>
-					<td>{{ report.status }}</td>
-					<td>{{ report.message }}</td>
+					<td>{{ result['ssl_report'].url }}</td>
+					<td>{{ result['ssl_report'].status }}</td>
+					<td>{{ result['ssl_report'].message }}</td>
 					<td>
-						{% if report.details and report.details.certificate_subject %}
-							{% for subject in report.details.certificate_subject %}
-								{% for entry in subject %}
-									{{ entry[0] }}: {{ entry[1] }}<br>
-								{% endfor %}
+						{% for subject in result['ssl_report'].details.certificate_subject %}
+							{% for entry in subject %}
+								{{ entry[0] }}: {{ entry[1] }}<br>
 							{% endfor %}
-						{% else %}
-							N/A
-						{% endif %}
+						{% endfor %}
 					</td>
 					<td>
-						{% if report.details and report.details.issuer %}
-							{% for issuer in report.details.issuer %}
-								{% for entry in issuer %}
-									{{ entry[0] }}: {{ entry[1] }}<br>
-								{% endfor %}
+						{% for issuer in result['ssl_report'].details.issuer %}
+							{% for entry in issuer %}
+								{{ entry[0] }}: {{ entry[1] }}<br>
 							{% endfor %}
-						{% else %}
-							N/A
-						{% endif %}
+						{% endfor %}
 					</td>
-					<td>{{ report.details.valid_from if report.details else 'N/A' }}</td>
-					<td>{{ report.details.valid_to if report.details else 'N/A' }}</td>
+					<td>{{ result['ssl_report'].details.valid_from }}</td>
+					<td>{{ result['ssl_report'].details.valid_to }}</td>
 				</tr>
-				{% endfor %}
 			</tbody>
 		</table>
 		
