@@ -211,7 +211,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						{% for element, count in result['digrams'] %}
+						{% for element, count in result['digrams'].items() %}
 						<tr>
 							<td>{{ element }}</td>
 							<td>{{ count }}</td>
