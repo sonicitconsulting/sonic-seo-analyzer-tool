@@ -107,6 +107,7 @@ class Page:
         self.content_hash: str = None
         self.nlp_keywords = []
         self.is_mobile_friendly: bool = False
+        self.page_language: str = ""
 
         if analyze_headings:
             self.headings = {}
@@ -134,7 +135,8 @@ class Page:
             "warnings": self.warnings,
             "content_hash": self.content_hash,
             "nlp_keywords": self.nlp_keywords,
-            "is_mobile_friendly": self.is_mobile_friendly
+            "is_mobile_friendly": self.is_mobile_friendly,
+            "page_language": self.page_language
         }
 
         if self.analyze_headings:
@@ -300,6 +302,7 @@ class Page:
     def process_text(self, page_text):
 
         language = self.rtv_text_language(page_text)
+        self.page_language = language
 
         doc = self.create_nlp_document(page_text, language)
         tokens, raw_tokens = self.tokenize_text(doc)

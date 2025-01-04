@@ -158,6 +158,7 @@
 							<p><u>Title tag:</u> {{ page["title"] }}</p>
 							<p><u>Description tag:</u> {{ page["description"] }}</p>
 							<p><u>Is page Mobile Friendly:</u> {{ page["is_mobile_friendly"] }}</p>
+							<p><u>Detected language:</u> {{ page["page_language"] }}</p>
 							<ul>
 								{% for err in page["warnings"] %}
 								<li>{{ err|e }}</li>
