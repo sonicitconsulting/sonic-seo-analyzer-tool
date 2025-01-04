@@ -48,6 +48,7 @@
 		{% if result['ssl_report'] %}
 		<h2 id="ssl-section">SSL Report:</h2>
 		<br>
+		<pre>{{ result['ssl_report'] | tojson }}</pre>
 		<table>
 			<thead>
 				<tr>
