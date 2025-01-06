@@ -255,7 +255,7 @@ class Page:
         soup_unmodified = BeautifulSoup(html_without_comments, "html.parser")
 
         self.check_canonical_tag(soup_unmodified)
-        self.find_broken_links(soup_unmodified, self.base_domain)
+        #self.find_broken_links(soup_unmodified, self.base_domain)
 
         self.process_text(self.content["text"])
 
