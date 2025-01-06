@@ -238,26 +238,27 @@
 				<h3>Semantic Similitude</h3>
 				{% for heatmap_path in result['heatmap_path'] %}
 					<div class="heatmap">
-						<h4>{{ loop.index }}. Heatmap</h4>
 						<img src="{{ heatmap_path }}" alt="Similarity Heatmap {{ loop.index }}">
 					</div>
 				{% endfor %}
 			</div>
 
-			<div id="semantic-similitude">
+			<div id="keyword-graph">
 				<h3>Keyword Graph</h3>
 				{% for path in result['graph_path'] %}
 					<div class="graph">
-						<h4>{{ loop.index }}. Heatmap</h4>
 						<img src="{{ path }}" alt="Word Graph {{ loop.index }}">
 					</div>
 				{% endfor %}
 			</div>
 
-
 			<div id="semantic-clusters">
 				<h3>Keyword Clusters</h3>
-				<img src="{{ result['cluster_path'] }}" alt="Cluster Graph">
+				{% for path in result['cluster_path'] %}
+					<div class="graph">
+						<img src="{{ path }}" alt="Cluster Graph {{ loop.index }}">
+					</div>
+				{% endfor %}
 			</div>
 
 
