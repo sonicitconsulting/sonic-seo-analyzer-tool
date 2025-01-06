@@ -25,6 +25,8 @@
 			<h1>SEO Inspection Results for <br> {{result['inspected_site']}}</h1>
 		</div>
 
+		<p>Run on: {{result['timestamp']}} </p>
+
 		{%if result['fatal_error']%}
 		<p>There was a fatal error when trying to format the output file as a webpage. Confirm that there is an output.json file in the directory.
 			{% else %}
