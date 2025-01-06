@@ -253,6 +253,8 @@ class Page:
         soup_lower = BeautifulSoup(html_without_comments.lower(), "html.parser")
         soup_unmodified = BeautifulSoup(html_without_comments, "html.parser")
 
+        self.check_canonical_tag(soup_unmodified)
+
         self.process_text(self.content["text"])
 
         self.analyze_noindex(soup_lower)
@@ -576,3 +578,17 @@ class Page:
         ]
         return ngrams
 
+    def check_canonical_tag(self, soup):
+        """
+        Verifica la presenza del tag <link rel="canonical"> in un oggetto BeautifulSoup.
+        
+        Args:
+            soup (BeautifulSoup): Oggetto BeautifulSoup che rappresenta il documento HTML.
+
+        """
+
+        # Trova il tag canonical
+        canonical_tag = soup.find("link", rel="canonical")
+        
+        if not (canonical_tag and canonical_tag.has_attr("href")):
+            self.warn("Canonical tag not found or href attribute is missing")
