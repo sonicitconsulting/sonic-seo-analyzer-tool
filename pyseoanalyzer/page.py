@@ -578,19 +578,23 @@ class Page:
         ]
         return ngrams
 
-    def limit_counter(self, counter_obj, n=20):
+    def limit_counter(self, data, n):
         """
-        Limita un oggetto Counter alle prime n occorrenze in ordine discendente.
+        Limita un oggetto Counter o una lista alle prime n occorrenze in ordine discendente.
         
         Args:
-            counter_obj (Counter): L'oggetto Counter da limitare.
+            data (Counter or list): Il Counter o la lista da limitare.
             n (int): Il numero massimo di occorrenze da mantenere.
             
         Returns:
             Counter: Un nuovo Counter limitato alle prime n occorrenze.
         """
+        # Converti la lista in Counter se necessario
+        if isinstance(data, list):
+            data = Counter(data)
+        
         # Ottieni gli n elementi più comuni
-        most_common_items = counter_obj.most_common(n)
+        most_common_items = data.most_common(n)
         
         # Crea un nuovo Counter con gli elementi limitati
         return Counter(dict(most_common_items))
