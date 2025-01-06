@@ -25,15 +25,15 @@
 			<h1>SEO Inspection Results for <br> {{result['inspected_site']}}</h1>
 		</div>
 
-		<p>Run on: {{result['timestamp']}} </p>
+		<p><strong>Run on: </strong>{{result['timestamp']}} </p>
+		<p><strong>Duration: </strong>{{result['total_time']|round(2)}} seconds </p>
 
 		{%if result['fatal_error']%}
 		<p>There was a fatal error when trying to format the output file as a webpage. Confirm that there is an output.json file in the directory.
 			{% else %}
-			<p>total time: {{result['total_time']|round(2)}} seconds </p>
-
+			
 			<div>
-				<h3>go to:</h3> <a href="#sitemap-section">Sitemap analysis</a> &nbsp; <a href="#page-section">Page analysis</a></li> &nbsp; <a href="#semantic-section">Semantic analysis</a></li>
+				<p><strong>Go to</strong></p> <a href="#ssl-section">SSL report</a> &nbsp; <a href="#sitemap-section">Sitemap analysis</a> &nbsp; <a href="#page-section">Page analysis</a></li> &nbsp; <a href="#semantic-section">Semantic analysis</a></li>
 			</div>
 
 			<br><br>
