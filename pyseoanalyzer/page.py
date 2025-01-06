@@ -655,7 +655,7 @@ class Page:
                 response = requests.head(absolute_url, allow_redirects=True, timeout=5)
                 if response.status_code != 200:
                     code = str(response.status_code)
-                    self.warn(f"Url {self.url} is broken - Status code: {code}")
+                    self.warn(f"Url {absolute_url} is broken - Status code: {code}")
             except requests.RequestException as e:
                 # Se c'è un errore, aggiungi il link alla lista di link non raggiungibili
                 self.warn(f"Url {self.url} is broken - Error {e}")
