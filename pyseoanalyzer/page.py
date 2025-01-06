@@ -255,7 +255,7 @@ class Page:
         soup_unmodified = BeautifulSoup(html_without_comments, "html.parser")
 
         self.check_canonical_tag(soup_unmodified)
-        self.find_broken_links(soup_unmodified)
+        self.find_broken_links(soup_unmodified, self.base_domain)
 
         self.process_text(self.content["text"])
 
@@ -502,7 +502,6 @@ class Page:
         return {"text":text,
                 "comments":""}
     
-
     def rtv_text_language(self, text):
         """
         Identifica la lingua del testo tra un insieme specifico di lingue: {en, de, it, fr, es}.
@@ -540,7 +539,6 @@ class Page:
         # Se nessuna lingua dell'insieme è trovata, assegna inglese
         return 'en'
 
-    
     def create_nlp_document(self, text, language):
 
         if language == 'it':
@@ -632,11 +630,8 @@ class Page:
         
         Args:
             soup (BeautifulSoup): Oggetto BeautifulSoup rappresentante il documento HTML.
-            base_url (str, optional): URL base da utilizzare per risolvere link relativi.
             timeout (int, optional): Timeout per le richieste HTTP (default: 5 secondi).
             
-        Returns:
-            list: Lista di dizionari con dettagli sui link analizzati e il loro stato.
         """
         broken_links = []
         links = soup.find_all("a", href=True)
