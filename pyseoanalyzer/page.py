@@ -654,7 +654,7 @@ class Page:
                 # Effettua una richiesta HEAD per controllare il link
                 response = requests.head(absolute_url, allow_redirects=True, timeout=5)
                 if response.status_code != 200:
-                    self.warn(f"Url {self.url} is broken - Status code: {response.status_code}")
+                    self.warn(f"Url {self.url} is broken - Status code: {str(response.status_code)}")
             except requests.RequestException as e:
                 # Se c'è un errore, aggiungi il link alla lista di link non raggiungibili
                 self.warn(f"Url {self.url} is broken - Error {e}")
