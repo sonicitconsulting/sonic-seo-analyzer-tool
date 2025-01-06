@@ -188,8 +188,7 @@
 			<div>
 				<p><strong>Total inspected pages: </strong> {{ result["total_inspected_pages"] }}</p>
 			</div>
-			<input type="button" value="hide all notices " onclick="toggleDetail()" class="btn btn-info" id="ebutton">
-
+			
 			<div class="table-responsive">
 				<table id="tech-seo-pages" class="table table-striped table-hover">
 					<thead>
@@ -228,12 +227,7 @@
 					</tbody>
 				</table>
 			</div>
-			<div class="title pb-12">
-				<div class="pd-20 card-box mb-30">
-					<button type="button" class="btn btn-secondary btn-lg btn-block" onclick="exportTableToCSV('tech-seo-pages')">Esporta PDF</button>
-				</div>
-			</div>
-			
+		
 
 			{% endif %}
 			<br>
