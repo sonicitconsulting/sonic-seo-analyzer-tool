@@ -222,23 +222,6 @@
 								<li>{{ err|e }}</li>
 								{% endfor %}
 							</ul>
-							<!-- Tabella per le keyword e i punteggi TF-IDF -->
-							<table class="table table-bordered">
-								<thead>
-									<tr>
-										<th>Keyword</th>
-										<th>TF-IDF Score</th>
-									</tr>
-								</thead>
-								<tbody>
-									{% for keyword in page["nlp_keywords"] %}
-									<tr>
-										<td>{{ keyword.word }}</td>
-										<td>{{ keyword.score }}</td>
-									</tr>
-									{% endfor %}
-								</tbody>
-							</table>
 						</td>
 					</tr>
 					{% endfor %}
