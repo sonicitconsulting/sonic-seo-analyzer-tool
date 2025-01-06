@@ -6,6 +6,7 @@ import os
 import re
 import trafilatura
 import spacy
+import requests
 
 from bs4 import BeautifulSoup
 from collections import Counter
@@ -254,6 +255,7 @@ class Page:
         soup_unmodified = BeautifulSoup(html_without_comments, "html.parser")
 
         self.check_canonical_tag(soup_unmodified)
+        self.find_broken_links(soup_unmodified)
 
         self.process_text(self.content["text"])
 
@@ -500,13 +502,44 @@ class Page:
         return {"text":text,
                 "comments":""}
     
+
     def rtv_text_language(self, text):
-
-        identifier = LanguageIdentifier.from_pickled_model(MODEL_FILE, norm_probs=True) 
-
+        """
+        Identifica la lingua del testo tra un insieme specifico di lingue: {en, de, it, fr, es}.
+        
+        Args:
+            text (str): Il testo da analizzare.
+            
+        Returns:
+            str: Il codice della lingua con la probabilità maggiore all'interno dell'insieme specificato,
+                o 'unknown' se nessuna delle lingue dell'insieme è rilevata.
+        """
+        identifier = LanguageIdentifier.from_pickled_model(MODEL_FILE, norm_probs=True)
+        
+        # Classifica il testo
         lang, prob = identifier.classify(text)
+        
+        # Insieme di lingue consentite
+        allowed_languages = {'en', 'de', 'it', 'fr', 'es'}
+        
+        # Verifica se la lingua classificata è nell'insieme consentito
+        if lang in allowed_languages:
+            return lang
+        
+        # Calcola le probabilità per tutte le lingue
+        probs = identifier.rank(text)
+        
+        # Filtra solo le lingue nell'insieme consentito
+        filtered_langs = [(language, probability) for language, probability in probs if language in allowed_languages]
+        
+        # Ordina per probabilità decrescente
+        if filtered_langs:
+            filtered_langs.sort(key=lambda x: x[1], reverse=True)
+            return filtered_langs[0][0]  # Restituisci la lingua con la probabilità maggiore
+        
+        # Se nessuna lingua dell'insieme è trovata, assegna inglese
+        return 'en'
 
-        return lang
     
     def create_nlp_document(self, text, language):
 
@@ -592,3 +625,32 @@ class Page:
         
         if not (canonical_tag and canonical_tag.has_attr("href")):
             self.warn("Canonical tag not found or href attribute is missing")
+
+    def find_broken_links(self, soup, base_url=None, timeout=5):
+        """
+        Analizza un oggetto BeautifulSoup per individuare eventuali broken links.
+        
+        Args:
+            soup (BeautifulSoup): Oggetto BeautifulSoup rappresentante il documento HTML.
+            base_url (str, optional): URL base da utilizzare per risolvere link relativi.
+            timeout (int, optional): Timeout per le richieste HTTP (default: 5 secondi).
+            
+        Returns:
+            list: Lista di dizionari con dettagli sui link analizzati e il loro stato.
+        """
+        broken_links = []
+        links = soup.find_all("a", href=True)
+        
+        for tag in links:
+            url = tag['href']
+            
+            # Risolve i link relativi utilizzando base_url
+            if base_url and not url.startswith(("http://", "https://")):
+                url = requests.compat.urljoin(base_url, url)
+
+                # Effettua una richiesta GET al link
+                response = requests.get(url, timeout=timeout)
+                if response.status_code >= 400:
+                    self.warn(f"{url} link is broken: status code {response.status_code}")
+        
+        return broken_links
