@@ -255,6 +255,7 @@ class Page:
 
         self.process_text(self.content["text"])
 
+        self.analyze_noindex(soup_lower)
         self.analyze_title()
         self.analyze_description()
         self.analyze_og(soup_lower)
@@ -295,9 +296,6 @@ class Page:
             for word in TOKEN_REGEX.findall(rawtext.lower())
             if word not in ENGLISH_STOP_WORDS
         ]
-
-    def getngrams(self, D, n=2):
-        return zip(*[D[i:] for i in range(n)])
 
     def process_text(self, page_text):
 
@@ -393,6 +391,12 @@ class Page:
             self.warn(
                 "Description is too long (more than 255 characters): {0}".format(d)
             )
+
+    def analyze_noindex(self, bs):
+
+        meta_robots = bs.find("meta", attrs={"name": "robots"})
+        if meta_robots and "noindex" in meta_robots.get("content", "").lower():
+            self.warn("Found tag noindex")
 
     def visible_tags(self, element):
         if element.parent.name in ["style", "script", "[document]"]:
