@@ -98,10 +98,7 @@
 				</tr>				
 			</tbody>
 		</table>
-		
-		
-		
-		
+
 		{% endif %}
 		
 		{% if result['sitemap'] %}
@@ -188,6 +185,9 @@
 
 		{% if result['pages'] %}
 			<h2 id="page-section">Page analysis:</h2>
+			<div>
+				<p><strong>Total inspected pages: </strong> {{ result["total_inspected_pages"] }}</p>
+			</div>
 			<input type="button" value="hide all notices " onclick="toggleDetail()" class="btn btn-info" id="ebutton">
 
 			<div class="table-responsive">
