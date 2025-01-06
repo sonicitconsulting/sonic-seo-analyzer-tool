@@ -310,10 +310,8 @@ class Page:
         self.nlp_keywords = self.extract_keywords_tfidf([" ".join(tokens)], 30)
 
         self.bigrams = self.extract_n_grams(doc, 2)
-        self.bigrams = self.limit_counter(self.bigrams)
 
         self.trigrams = self.extract_n_grams(doc, 3)
-        self.trigrams = self.limit_counter(self.trigrams)
 
         freq_dist = self.word_list_freq_dist(tokens)
 
@@ -578,23 +576,3 @@ class Page:
         ]
         return ngrams
 
-    def limit_counter(self, data, n=10):
-        """
-        Limita un oggetto Counter o una lista alle prime n occorrenze in ordine discendente.
-        
-        Args:
-            data (Counter or list): Il Counter o la lista da limitare.
-            n (int): Il numero massimo di occorrenze da mantenere.
-            
-        Returns:
-            Counter: Un nuovo Counter limitato alle prime n occorrenze.
-        """
-        # Converti la lista in Counter se necessario
-        if isinstance(data, list):
-            data = Counter(data)
-        
-        # Ottieni gli n elementi più comuni
-        most_common_items = data.most_common(n)
-        
-        # Crea un nuovo Counter con gli elementi limitati
-        return Counter(dict(most_common_items))
