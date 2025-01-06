@@ -294,10 +294,10 @@
 						{% for page in result['pages'] %}
 						{% set outer_loop = loop %}
 						<tr onclick="fullerrors({{outer_loop.index}})">
-							<td><i class="material-icons" id="i{{ outer_loop.index }}">keyboard_arrow_down</i></td>
+							<td></td>
 							<td><a href="{{ page['url'] }}" target="_blank">{{ page['url'] }}</a></td>
 							<td></td>
-							<td></td>
+							<td>Language: {{page['page_language']}}</td>
 						</tr>
 	
 						<tr id="{{ outer_loop.index }}" class="error-detail">
