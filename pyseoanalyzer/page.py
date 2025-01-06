@@ -309,11 +309,11 @@ class Page:
 
         self.nlp_keywords = self.extract_keywords_tfidf([" ".join(tokens)], 30)
 
-        bigrams = self.extract_n_grams(doc, 2)
-        self.bigrams = self.limit_counter(bigrams)
+        self.bigrams = self.extract_n_grams(doc, 2)
+        self.bigrams = self.limit_counter(self.bigrams)
 
-        trigrams = self.extract_n_grams(doc, 3)
-        self.trigrams = self.limit_counter(trigrams)
+        self.trigrams = self.extract_n_grams(doc, 3)
+        self.trigrams = self.limit_counter(self.trigrams)
 
         freq_dist = self.word_list_freq_dist(tokens)
 
