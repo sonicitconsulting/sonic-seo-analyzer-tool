@@ -578,7 +578,7 @@ class Page:
         ]
         return ngrams
 
-    def limit_counter(self, data, n):
+    def limit_counter(self, data, n=20):
         """
         Limita un oggetto Counter o una lista alle prime n occorrenze in ordine discendente.
         
