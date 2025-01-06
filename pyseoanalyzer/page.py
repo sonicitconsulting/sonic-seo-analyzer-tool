@@ -629,16 +629,19 @@ class Page:
         """
         Trova tutti i link non raggiungibili in un oggetto BeautifulSoup, 
         escludendo i link mailto e gestendo i link relativi.
-        
+
         Args:
             soup (BeautifulSoup): L'oggetto BeautifulSoup da analizzare.
             base_url (str): L'URL di base per risolvere i link relativi.
-
         """
         broken_links = []
         links = [a.get('href') for a in soup.find_all('a', href=True)]  # Estrae tutti i link
         
         for link in links:
+            # Controlla che il link sia una stringa valida
+            if not isinstance(link, str) or not link.strip():
+                continue  # Salta i link non validi
+
             # Esclude i link mailto
             if link.startswith("mailto:"):
                 continue
