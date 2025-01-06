@@ -283,25 +283,20 @@
 					<table id="tech-seo-pages" class="table table-striped table-hover">
 						<thead>
 							<tr>
-								<th></th>
-								<th>page</th>
-								<th>word count</th>
-								<th>number of notices</th>
+								<th>Keyword</th>
+								<th>TF-IDF Score</th>
 							</tr>
 						</thead>
 				
 						<tbody>
 						{% for page in result['pages'] %}
 						{% set outer_loop = loop %}
-						<tr onclick="fullerrors({{outer_loop.index}})">
-							<td><i class="material-icons" id="i{{ outer_loop.index }}">keyboard_arrow_down</i></td>
+						<tr colspa=2>
 							<td><a href="{{ page['url'] }}" target="_blank">{{ page['url'] }}</a></td>
-							<td>{{ page['word_count'] }}</td>
-							<td>{{ page["warnings"]|length }}</td>
 						</tr>
 	
 						<tr id="{{ outer_loop.index }}" class="error-detail">
-							<td colspan="4">
+							<td colspan="2">
 															<!-- Tabella per le keyword e i punteggi TF-IDF -->
 								<table class="table table-bordered">
 									<thead>
