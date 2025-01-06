@@ -246,7 +246,12 @@
 
 			<div id="semantic-similitude">
 				<h3>Keyword Graph</h3>
-				<img src="{{ result['graph_path'] }}" alt="Keyword Graph">
+				{% for path in result['graph_path'] %}
+					<div class="graph">
+						<h4>{{ loop.index }}. Heatmap</h4>
+						<img src="{{ path }}" alt="Word Graph {{ loop.index }}">
+					</div>
+				{% endfor %}
 			</div>
 
 
