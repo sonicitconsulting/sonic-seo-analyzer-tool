@@ -236,7 +236,12 @@
 			<h2 id="semantic-section">Semantic analysis</h2>
 			<div id="semantic-similitude">
 				<h3>Semantic Similitude</h3>
-				<img src="{{ result['heatmap_path'] }}" alt="Similarity Heatmap">
+				{% for heatmap_path in result['heatmap_path'] %}
+					<div class="heatmap">
+						<h4>{{ loop.index }}. Heatmap</h4>
+						<img src="{{ heatmap_path }}" alt="Similarity Heatmap {{ loop.index }}">
+					</div>
+				{% endfor %}
 			</div>
 
 			<div id="semantic-similitude">
