@@ -11,7 +11,7 @@ import requests
 from bs4 import BeautifulSoup
 from collections import Counter
 from string import punctuation
-from urllib.parse import urlsplit, urljoin, urlparse
+from urllib.parse import urlsplit, urljoin, urlparse, urlunsplit
 from urllib3.exceptions import HTTPError
 from py3langid.langid import LanguageIdentifier, MODEL_FILE 
 from spacy.cli import download
@@ -651,7 +651,7 @@ class Page:
                 link_assoluto = href
             else:
                 # Il link è relativo, risolvilo rispetto alla base URL
-                link_assoluto = urljoin(base_url, href)
+                link_assoluto = urljoin(urlunsplit(base_url), href)
             
             try:
                 # Effettua una richiesta HEAD per controllare il link
