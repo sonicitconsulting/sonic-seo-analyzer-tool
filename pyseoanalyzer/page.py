@@ -625,40 +625,44 @@ class Page:
             self.warn("Canonical tag not found or href attribute is missing")
 
 
+
     def find_broken_links(self, soup, base_url):
         """
-        Trova tutti i link non raggiungibili in un oggetto BeautifulSoup, 
-        escludendo i link mailto e gestendo i link relativi.
+        Trova i link non raggiungibili in una pagina web.
 
         Args:
-            soup (BeautifulSoup): L'oggetto BeautifulSoup da analizzare.
-            base_url (str): L'URL di base per risolvere i link relativi.
-        """
-        broken_links = []
-        links = [a.get('href') for a in soup.find_all('a', href=True)]  # Estrae tutti i link
-        
-        for link in links:
-            # Controlla che il link sia una stringa valida
-            if not isinstance(link, str) or not link.strip():
-                continue  # Salta i link non validi
+            soup (BeautifulSoup): Oggetto BeautifulSoup contenente il DOM della pagina web.
+            base_url (str): L'URL base da cui risolvere i link relativi.
 
-            # Esclude i link mailto
-            if link.startswith("mailto:"):
+        """
+        
+        # Trova tutti i tag <a> con attributo href
+        for tag in soup.find_all('a', href=True):
+            href = tag['href']
+            
+            # Escludi link mailto:
+            if href.startswith('mailto:'):
                 continue
             
-            # Controlla se il link è relativo o assoluto
-            parsed_link = urlparse(link)
-            if not parsed_link.netloc:  # Se manca il dominio, è un link relativo
-                absolute_url = urljoin(base_url, link)
-            else:  # Altrimenti è già un URL assoluto
-                absolute_url = link
+            # Controlla se il link è assoluto o relativo
+            parsed_href = urlparse(href)
+            if parsed_href.netloc:
+                # Il link è assoluto
+                link_assoluto = href
+            else:
+                # Il link è relativo, risolvilo rispetto alla base URL
+                link_assoluto = urljoin(base_url, href)
             
             try:
                 # Effettua una richiesta HEAD per controllare il link
-                response = requests.head(absolute_url, allow_redirects=True, timeout=5)
-                if response.status_code != 200:
-                    self.warn(f"Url {absolute_url} is broken")
-            except requests.RequestException as e:
-                # Se c'è un errore, aggiungi il link alla lista di link non raggiungibili
-                self.warn(f"Url {absolute_url} is broken - Error {e}")
+                response = requests.head(link_assoluto, timeout=5)
+                
+                # Consideriamo non raggiungibili i link con status_code >= 400
+                if response.status_code >= 400:
+                    self.warn(f"Url {link_assoluto} is broken")
+            except requests.RequestException:
+                # Se c'è un errore nella richiesta, il link è considerato non raggiungibile
+                self.warn(f"Url {link_assoluto} is broken")
+
+
 
