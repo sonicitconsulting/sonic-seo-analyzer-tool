@@ -116,7 +116,7 @@ class Page:
         if analyze_extra_tags:
             self.additional_info = {}
 
-        self.broken_links = []
+        self.visited_links = []
 
     def as_dict(self):
         """
@@ -653,7 +653,9 @@ class Page:
                 # Il link è relativo, risolvilo rispetto alla base URL
                 link_assoluto = urljoin(urlunsplit(base_url), href)
 
-            if link_assoluto in self.broken_links:
+            
+            link_status = self.get_link_status(link_assoluto)
+            if link_status == 'broken':
                 self.warn(f"Url {link_assoluto} is broken")
                 continue
             
@@ -664,10 +666,21 @@ class Page:
                 # Consideriamo non raggiungibili i link con status_code >= 400
                 if response.status_code >= 400:
                     self.warn(f"Url {link_assoluto} is broken")
-                    self.broken_links.append(link_assoluto)
+                    self.broken_links.append({'url':link_assoluto,
+                                              'status':'broken'})
+                else:
+                    self.broken_links.append({'url':link_assoluto,
+                                              'status':'good'})
             except requests.RequestException:
                 # Se c'è un errore nella richiesta, il link è considerato non raggiungibile
                 self.warn(f"Url {link_assoluto} is broken")
 
 
-
+    def get_link_status(self, url_to_check):
+        """
+        Trova lo status di un URL nella lista senza usare un ciclo for esplicito.
+        Ritorna None se l'URL non è presente.
+        """
+        # Usa next() per trovare il primo elemento che corrisponde
+        entry = next((item for item in self.visited_links if item['url'] == url_to_check), None)
+        return entry['status'] if entry else None
