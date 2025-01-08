@@ -186,9 +186,13 @@
 		{% endif %}
 
 		<h3>Notes:</h3>
-		<div>
-			<textarea class="form-control" id="notes"></textarea>
-		</div>
+		<div style="display: flex; align-items: center;">
+			<textarea class="form-control" id="notes" style="flex-grow: 1;"></textarea>
+			<button type="button" class="btn btn-primary btn-lg" style="margin-left: 10px;">
+			  Large button
+			</button>
+		  </div>
+		  
 
 
 		{% if result['pages'] %}

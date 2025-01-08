@@ -519,7 +519,7 @@ class Page:
         lang, prob = identifier.classify(text)
         
         # Insieme di lingue consentite
-        allowed_languages = {'en', 'de', 'it', 'fr', 'es'}
+        allowed_languages = {'en', 'it', 'fr', 'es'}
         
         # Verifica se la lingua classificata è nell'insieme consentito
         if lang in allowed_languages:
@@ -623,8 +623,6 @@ class Page:
         
         if not (canonical_tag and canonical_tag.has_attr("href")):
             self.warn("Canonical tag not found or href attribute is missing")
-
-
 
     def find_broken_links(self, soup, base_url):
         """
