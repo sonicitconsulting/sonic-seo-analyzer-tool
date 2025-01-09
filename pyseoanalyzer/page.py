@@ -69,7 +69,7 @@ class Page:
     Container for each page and the core analyzer.
     """
     
-    checked_links = set()
+    checked_links = {}
 
     def __init__(
         self,
@@ -667,15 +667,15 @@ class Page:
                 # Consideriamo non raggiungibili i link con status_code >= 400
                 if response.status_code >= 400:
                     self.warn(f"Url {link_assoluto} is broken")
-                    Page.checked_links.append({'url':link_assoluto,
+                    Page.checked_links.add({'url':link_assoluto,
                                               'status':'broken'})
                 else:
-                    Page.checked_links.append({'url':link_assoluto,
+                    Page.checked_links.add({'url':link_assoluto,
                                               'status':'good'})
             except requests.RequestException:
                 # Se c'è un errore nella richiesta, il link è considerato non raggiungibile
                 self.warn(f"Url {link_assoluto} is broken")
-                Page.checked_links.append({'url':link_assoluto,
+                Page.checked_links.add({'url':link_assoluto,
                                             'status':'broken'})
 
 
