@@ -69,7 +69,7 @@ class Page:
     Container for each page and the core analyzer.
     """
     
-    checked_links = {}
+    checked_links = []
 
     def __init__(
         self,
