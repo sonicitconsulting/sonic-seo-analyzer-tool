@@ -68,6 +68,8 @@ class Page:
     """
     Container for each page and the core analyzer.
     """
+    
+    checked_links = set()
 
     def __init__(
         self,
@@ -116,7 +118,6 @@ class Page:
         if analyze_extra_tags:
             self.additional_info = {}
 
-        self.visited_links = []
 
     def as_dict(self):
         """
@@ -666,14 +667,16 @@ class Page:
                 # Consideriamo non raggiungibili i link con status_code >= 400
                 if response.status_code >= 400:
                     self.warn(f"Url {link_assoluto} is broken")
-                    self.visited_links.append({'url':link_assoluto,
+                    Page.checked_links.append({'url':link_assoluto,
                                               'status':'broken'})
                 else:
-                    self.visited_links.append({'url':link_assoluto,
+                    Page.checked_links.append({'url':link_assoluto,
                                               'status':'good'})
             except requests.RequestException:
                 # Se c'è un errore nella richiesta, il link è considerato non raggiungibile
                 self.warn(f"Url {link_assoluto} is broken")
+                Page.checked_links.append({'url':link_assoluto,
+                                            'status':'broken'})
 
 
     def get_link_status(self, url_to_check):
@@ -682,5 +685,5 @@ class Page:
         Ritorna None se l'URL non è presente.
         """
         # Usa next() per trovare il primo elemento che corrisponde
-        entry = next((item for item in self.visited_links if item['url'] == url_to_check), None)
+        entry = next((item for item in Page.visited_links if item['url'] == url_to_check), None)
         return entry['status'] if entry else None
