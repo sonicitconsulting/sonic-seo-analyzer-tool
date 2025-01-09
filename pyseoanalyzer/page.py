@@ -685,5 +685,5 @@ class Page:
         Ritorna None se l'URL non è presente.
         """
         # Usa next() per trovare il primo elemento che corrisponde
-        entry = next((item for item in Page.visited_links if item['url'] == url_to_check), None)
+        entry = next((item for item in Page.checked_links if item['url'] == url_to_check), None)
         return entry['status'] if entry else None
