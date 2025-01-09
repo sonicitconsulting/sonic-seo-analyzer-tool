@@ -659,6 +659,8 @@ class Page:
             if link_status == 'broken':
                 self.warn(f"Url {link_assoluto} is broken")
                 continue
+            elif link_status == 'good':
+                continue
             
             try:
                 # Effettua una richiesta HEAD per controllare il link
