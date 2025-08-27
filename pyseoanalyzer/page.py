@@ -365,15 +365,19 @@ class Page:
         t = self.title
 
         # calculate the length of the title once
-        length = len(t)
+        if t is not None:
+            length = len(t)
 
-        if length == 0:
+            if length == 0:
+                self.warn("Missing title tag")
+                return
+            elif length < 10:
+                self.warn("Title tag is too short (less than 10 characters): {0}".format(t))
+            elif length > 70:
+                self.warn("Title tag is too long (more than 70 characters): {0}".format(t))
+        else:
             self.warn("Missing title tag")
-            return
-        elif length < 10:
-            self.warn("Title tag is too short (less than 10 characters): {0}".format(t))
-        elif length > 70:
-            self.warn("Title tag is too long (more than 70 characters): {0}".format(t))
+
 
     def analyze_description(self):
         """
@@ -383,21 +387,26 @@ class Page:
         # getting lazy, create a local variable so save having to
         # type self.x a billion times
         d = self.description
-
+        
+        if d is not None:
         # calculate the length of the description once
-        length = len(d)
+            length = len(d)
 
-        if length == 0:
+            if length == 0:
+                self.warn("Missing description")
+                return
+            elif length < 140:
+                self.warn(
+                    "Description is too short (less than 140 characters): {0}".format(d)
+                )
+            elif length > 255:
+                self.warn(
+                    "Description is too long (more than 255 characters): {0}".format(d)
+                )
+        else:
             self.warn("Missing description")
             return
-        elif length < 140:
-            self.warn(
-                "Description is too short (less than 140 characters): {0}".format(d)
-            )
-        elif length > 255:
-            self.warn(
-                "Description is too long (more than 255 characters): {0}".format(d)
-            )
+
 
     def analyze_noindex(self, bs):
 
